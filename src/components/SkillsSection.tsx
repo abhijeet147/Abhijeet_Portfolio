@@ -28,7 +28,7 @@ const SkillsSection: React.FC = () => {
     { name: 'Jenkins', level: 88, icon: GitBranch, color: 'from-green-500 to-green-600' },
     { name: 'AWS', level: 82, icon: Server, color: 'from-orange-500 to-orange-600' },
     { name: 'Ansible', level: 80, icon: Server, color: 'from-red-500 to-red-600' },
-    { name: 'ArgoCD', level: 75, icon: ArrowRight, color: 'from-purple-500 to-purple-600' },
+    { name: 'Graphana', level: 75, icon: ArrowRight, color: 'from-purple-500 to-purple-600' },
     { name: 'Prometheus', level: 78, icon: Activity, color: 'from-yellow-500 to-yellow-600' }
   ];
 

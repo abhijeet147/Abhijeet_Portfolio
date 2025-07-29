@@ -15,14 +15,15 @@ function App() {
   const [toastMessage, setToastMessage] = useState('');
 
   const handleResumeDownload = () => {
-    // Create and download resume file
+    // Download resume from Google Drive
     const link = document.createElement('a');
-    link.href = '/resume.pdf'; // You'll need to add your actual resume file to the public folder
+    link.href = 'https://drive.google.com/uc?export=download&id=1CJTioyfQaISK0kbHnh8h0zd07ubA8eHp';
     link.download = 'Abhijeet_Kamthe_Resume.pdf';
     link.target = '_blank';
+    document.body.appendChild(link);
     link.click();
-    
-    setToastMessage('Resume downloaded successfully');
+    document.body.removeChild(link);
+    setToastMessage('Resume download started');
     setShowToast(true);
   };
 
@@ -52,7 +53,7 @@ function App() {
         <div className="relative z-10">
           <section id="home">
             <HeroSection 
-              onResumeClick={() => scrollToSection('resume')}
+              onResumeClick={handleResumeDownload}
               onContactClick={() => scrollToSection('contact')}
             />
           </section>
