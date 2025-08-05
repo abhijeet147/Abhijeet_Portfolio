@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Linkedin, Github, Send, CheckCircle } from 'lucide-react';
 
 const ContactSection: React.FC = () => {
@@ -10,6 +10,28 @@ const ContactSection: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [blinkingElement, setBlinkingElement] = useState<string | null>(null);
+
+  // Listen for URL hash changes to trigger blinking
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash === '#email') {
+        setBlinkingElement('email');
+        setTimeout(() => setBlinkingElement(null), 5000);
+      } else if (hash === '#phone') {
+        setBlinkingElement('phone');
+        setTimeout(() => setBlinkingElement(null), 5000);
+      }
+    };
+
+    // Check initial hash
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -50,8 +72,22 @@ const ContactSection: React.FC = () => {
   const socialLinks = [
     { icon: Linkedin, href: 'https://linkedin.com/in/abhijeet-kamthe', label: 'LinkedIn', color: 'hover:text-blue-400' },
     { icon: Github, href: 'https://github.com/abhijeet-kamthe', label: 'GitHub', color: 'hover:text-gray-400' },
-    { icon: Mail, href: 'mailto:abhijeetkamthe2002@gmail.com', label: 'abhijeetkamthe2002@gmail.com', color: 'hover:text-red-400' },
-    { icon: Phone, href: 'tel:+918928268763', label: '+91 8928268763', color: 'hover:text-green-400' }
+    { 
+      icon: Mail, 
+      href: 'mailto:abhijeetkamthe2002@gmail.com', 
+      label: 'abhijeetkamthe2002@gmail.com', 
+      color: 'hover:text-red-400',
+      id: 'email-contact',
+      isBlinking: blinkingElement === 'email'
+    },
+    { 
+      icon: Phone, 
+      href: 'tel:+918928268763', 
+      label: '+91 8928268763', 
+      color: 'hover:text-green-400',
+      id: 'phone-contact',
+      isBlinking: blinkingElement === 'phone'
+    }
   ];
 
   return (
@@ -80,7 +116,10 @@ const ContactSection: React.FC = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 transform hover:scale-105 spark-click ${social.color}`}
+                    id={social.id}
+                    className={`flex items-center p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 transform hover:scale-105 spark-click ${social.color} ${
+                      social.isBlinking ? 'contact-blink' : ''
+                    }`}
                   >
                     <social.icon className="w-5 h-5 mr-3" />
                     <span className="text-white">{social.label}</span>

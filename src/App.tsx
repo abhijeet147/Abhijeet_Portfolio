@@ -37,12 +37,12 @@ function App() {
   return (
     <>
       <header className="fixed top-0 left-0 w-full bg-gray-900 bg-opacity-80 z-50 shadow-md">
-        <nav className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+        <nav className="max-w-7xl mx-auto px-4 py-3 flex justify-end items-center">
           <div className="space-x-6">
-            <button onClick={() => scrollToSection('home')} className="text-white hover:text-blue-400 font-semibold transition bg-transparent border-none cursor-pointer">Home</button>
-            <button onClick={() => scrollToSection('projects')} className="text-white hover:text-blue-400 font-semibold transition bg-transparent border-none cursor-pointer">Projects</button>
-            <button onClick={() => scrollToSection('resume')} className="text-white hover:text-blue-400 font-semibold transition bg-transparent border-none cursor-pointer">Resume</button>
-            <button onClick={() => scrollToSection('about')} className="text-white hover:text-blue-400 font-semibold transition bg-transparent border-none cursor-pointer">About Me</button>
+            <button onClick={() => scrollToSection('home')} className="text-blue-400 hover:text-cyan-400 font-semibold transition bg-transparent border-none cursor-pointer">Home</button>
+            <button onClick={() => scrollToSection('projects')} className="text-blue-400 hover:text-cyan-400 font-semibold transition bg-transparent border-none cursor-pointer">Projects</button>
+            <button onClick={() => scrollToSection('resume')} className="text-blue-400 hover:text-cyan-400 font-semibold transition bg-transparent border-none cursor-pointer">Resume</button>
+            <button onClick={() => scrollToSection('about')} className="text-blue-400 hover:text-cyan-400 font-semibold transition bg-transparent border-none cursor-pointer">About Me</button>
           </div>
         </nav>
       </header>

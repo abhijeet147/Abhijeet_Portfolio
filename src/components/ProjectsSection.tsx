@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Github, X, Code, Cloud, TestTube } from 'lucide-react';
+import { ExternalLink, Github, X, Code, Cloud, TestTube, Server } from 'lucide-react';
 
 const ProjectsSection: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
@@ -25,22 +25,44 @@ const ProjectsSection: React.FC = () => {
     },
     {
       id: 2,
-      title: 'Weather Forecast Web Application',
-      description: 'Full-stack weather application with cloud deployment and DevOps practices.',
-      longDescription: `A modern weather forecasting application showcasing end-to-end cloud deployment and DevOps best practices.
+      title: 'Provisioning Multi-Tier Infrastructure using Ansible on Kubernetes',
+      description: 'Automated provisioning of complete LAMP stack using Ansible and Kubernetes, implementing Infrastructure-as-Code for scalable deployments.',
+      longDescription: `Automated the provisioning of a complete LAMP (Linux, Apache, MySQL, PHP) stack using Ansible and Kubernetes, implementing Infrastructure-as-Code (IaC) for scalable deployments.
 
       Key Features:
-      • Built with Node.js and OpenWeatherMap API integration
-      • Hosted on AWS EC2 with secure setup using SSH and SCP
-      • Clean, responsive UI for real-time weather updates
-      • Demonstrated end-to-end cloud deployment practices
-      • Automated deployment scripts for consistent environments
-      • SSL certificate configuration for secure connections
-      • Load balancing and auto-scaling configuration
-      • Monitoring and alerting setup with CloudWatch`,
-      technologies: ['Node.js', 'AWS EC2', 'API Integration', 'SSH', 'Cloud Deployment'],
-      icon: Cloud,
+      • Designed and built custom Docker images for:
+        1. Apache + PHP to serve a dynamic web application.
+        2. MySQL with persistent volume claims to ensure data durability.
+      • Developed modular Kubernetes YAML manifests to:
+        1. Create Deployments, Services, and Persistent Volumes for multi-tier architecture.
+        2. Expose Apache frontend and connect it to the backend MySQL service.
+      • Implemented Ansible Roles to clearly separate Docker build steps from Kubernetes resource application, improving maintainability and scalability.
+      • Ensured persistent data management for MySQL using Kubernetes PersistentVolumes and PersistentVolumeClaims.
+
+      Outcome & Impact:
+      • Reduced manual deployment time by 85% through complete automation using Ansible.
+      • Achieved 100% reproducibility of infrastructure across local, staging, and production environments.
+      • Improved deployment efficiency by 70%, allowing faster environment spin-ups and rollback handling.
+      • Delivered a clean, production-grade multi-tier LAMP stack architecture inside Kubernetes, with full separation of concerns.`,
+      technologies: ['Ansible', 'Kubernetes', 'Docker', 'LAMP Stack', 'Infrastructure-as-Code', 'MySQL', 'Apache', 'PHP'],
+      icon: Server,
       color: 'from-green-500 to-blue-500',
+      githubUrl: 'https://github.com/abhijeet147/ansible-k8s-lamp-stack.git'
+    },
+    {
+      id: 3,
+      title: 'Automated Docker Build & Push Pipeline using Jenkins & Local Registry',
+      description: 'Jenkins pipeline for automated Docker build and push to a local registry, achieving 85% workflow automation.',
+      longDescription: `- Set up a Jenkins pipeline using Jenkinsfile for complete build automation  
+- Cloned application code from GitHub using the built-in git step for version control integration.
+- Built a Docker image of the application using docker.build() command directly within the Jenkins pipeline.
+- Pushed the Docker image to a local Docker registry (localhost:5000) using docker.withRegistry() for private image hosting.
+- Configured pipeline environment variables (IMAGE_NAME, REGISTRY) to ensure reusable, modular pipeline design.
+- Used agent any to ensure compatibility across Jenkins agents/nodes.
+- Outcome: Achieved 85% automation of container build and deployment workflow, leading to faster, repeatable, and reliable delivery of Dockerized applications using CI/CD principles`,
+      technologies: ['Jenkins', 'Docker', 'Local Registry', 'CI/CD', 'Automation'],
+      icon: Code,
+      color: 'from-cyan-500 to-blue-500',
       githubUrl: '#'
     }
   ];
@@ -56,7 +78,7 @@ const ProjectsSection: React.FC = () => {
   };
 
   return (
-    <section className="py-20 px-4">
+    <section id="projects" className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 text-blue-400">
@@ -65,7 +87,7 @@ const ProjectsSection: React.FC = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto rounded"></div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8">
           {projects.map((project) => (
             <div
               key={project.id}
@@ -93,9 +115,12 @@ const ProjectsSection: React.FC = () => {
                 ))}
               </div>
               
-              <div className="flex items-center text-blue-400 hover:text-cyan-400 transition-colors">
-                <span className="mr-2">View Details</span>
-                <ExternalLink className="w-4 h-4" />
+              <div className="flex justify-center">
+                <button
+                  className="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 spark-click"
+                >
+                  View Details
+                </button>
               </div>
             </div>
           ))}
@@ -134,7 +159,7 @@ const ProjectsSection: React.FC = () => {
                     ))}
                   </div>
                   
-                  <div className="flex space-x-4 pt-4">
+                  <div className="flex justify-center pt-4">
                     <a 
                       href={projects.find(p => p.id === selectedProject)?.githubUrl}
                       target="_blank"

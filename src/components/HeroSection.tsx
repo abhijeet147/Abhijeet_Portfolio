@@ -20,12 +20,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onResumeClick, onContactClick
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [blinkingElement, setBlinkingElement] = useState<string | null>(null);
 
   const titles = [
-    'CI/CD Pipeline Enthusiast',
-    'Cloud Infrastructure Learner',
+    'CI/CD Specialist',
+    'Docker Expert',
     'Automation & Scripting Specialist',
-    'Container Technology Explorer'
+    'Kubernetes Orchestrator'
   ];
 
   const subtitles = [
@@ -91,11 +92,28 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onResumeClick, onContactClick
     document.body.style.overflow = 'unset';
   };
 
+  const scrollToProjects = () => {
+    const projectsSection = document.querySelector('#projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToContact = (type: 'email' | 'phone') => {
+    const contactSection = document.querySelector('#contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+      
+      // Set URL hash to trigger blinking in ContactSection
+      window.location.hash = type;
+    }
+  };
+
   const socialLinks = [
-    { icon: Linkedin, href: 'https://linkedin.com/in/abhijeet-kamthe', label: 'LinkedIn' },
-    { icon: Github, href: 'https://github.com/abhijeet147', label: 'GitHub' },
-    { icon: Mail, href: 'mailto:abhijeet.kamthe@gmail.com', label: 'Email' },
-    { icon: Phone, href: 'tel:+1234567890', label: 'Phone' }
+    { icon: Linkedin, href: 'https://linkedin.com/in/abhijeet-kamthe', label: 'LinkedIn', action: () => window.open('https://linkedin.com/in/abhijeet-kamthe', '_blank') },
+    { icon: Github, href: 'https://github.com/abhijeet147', label: 'GitHub', action: () => window.open('https://github.com/abhijeet147', '_blank') },
+    { icon: Mail, href: '#', label: 'Email', action: () => scrollToContact('email') },
+    { icon: Phone, href: '#', label: 'Phone', action: () => scrollToContact('phone') }
   ];
 
   return (
@@ -104,11 +122,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onResumeClick, onContactClick
         {/* Mobile Layout - Image First */}
         <div className="block md:hidden">
           <div className="flex justify-center mb-8">
-            <div className="glass-card p-6 rounded-xl border border-white/20 backdrop-blur-sm profile-card-glow max-w-sm w-full">
+                            <div className="glass-card p-6 rounded-xl border border-white/20 backdrop-blur-sm profile-card-glow w-80">
               <div className="text-center">
-                <div className="relative w-32 h-32 mx-auto mb-4">
-                  <div className="w-32 h-32 rounded-full flex items-center justify-center ak-image-continuous">
-                    <img src={AbhijeetPhoto} alt="Abhijeet Kamthe" className="w-32 h-32 rounded-full object-cover border-2 border-white" />
+                <div className="relative w-40 h-40 mx-auto mb-4">
+                  <div className="w-40 h-40 rounded-full flex items-center justify-center ak-image-continuous">
+                    <img src={AbhijeetPhoto} alt="Abhijeet Kamthe" className="w-40 h-40 rounded-full object-cover border-2 border-white" />
                   </div>
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 animate-pulse-ring"></div>
                 </div>
@@ -123,7 +141,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onResumeClick, onContactClick
                   onClick={openHireForm}
                   className="w-full px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 spark-click text-sm"
                 >
-                  Ready to Grab Opportunities
+                  Ready to Get Hired
                 </button>
               </div>
             </div>
@@ -161,37 +179,35 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onResumeClick, onContactClick
               </button>
               
               <button
-                onClick={onContactClick}
-                className="group relative px-8 py-4 bg-transparent border-2 border-blue-500 rounded-lg font-semibold text-blue-400 hover:bg-blue-500 hover:text-white transition-all duration-300 transform hover:scale-105 spark-click"
+                onClick={scrollToProjects}
+                className="group relative px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 spark-click"
               >
-                Contact Me
+                View Projects
               </button>
             </div>
 
             {/* Social Links */}
             <div className="flex space-x-6 z-10 relative">
               {socialLinks.map((social, index) => (
-                <a
+                <button
                   key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={social.action}
                   className="group relative p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-110 spark-click"
                   aria-label={social.label}
                 >
                   <social.icon className="w-6 h-6 text-blue-400 group-hover:text-cyan-400 transition-colors duration-300" />
-                </a>
+                </button>
               ))}
             </div>
           </div>
 
           {/* Right side - Profile card positioned in middle right */}
           <div className={`hero-content-right ${isVisible ? 'animate' : ''} hidden md:block`}>
-            <div className="glass-card p-8 rounded-xl border border-white/20 backdrop-blur-sm profile-card-glow">
+            <div className="glass-card p-8 rounded-xl border border-white/20 backdrop-blur-sm profile-card-glow w-96">
               <div className="text-center">
-                <div className="relative w-40 h-40 mx-auto mb-6">
-                  <div className="w-40 h-40 rounded-full flex items-center justify-center ak-image-continuous">
-                    <img src={AbhijeetPhoto} alt="Abhijeet Kamthe" className="w-40 h-40 rounded-full object-cover border-2 border-white" />
+                <div className="relative w-48 h-48 mx-auto mb-6">
+                  <div className="w-48 h-48 rounded-full flex items-center justify-center ak-image-continuous">
+                    <img src={AbhijeetPhoto} alt="Abhijeet Kamthe" className="w-48 h-48 rounded-full object-cover border-2 border-white" />
                   </div>
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 animate-pulse-ring"></div>
                 </div>
@@ -206,7 +222,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onResumeClick, onContactClick
                   onClick={openHireForm}
                   className="w-full px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 spark-click"
                 >
-                  Ready to Grab Opportunities
+                  Ready to Get Hired
                 </button>
               </div>
             </div>
@@ -226,7 +242,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onResumeClick, onContactClick
           <div className="bg-gray-800 rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-white">Ready to Grab Opportunities</h3>
+                <h3 className="text-2xl font-bold text-white">Ready to Get Hired</h3>
                 <button
                   onClick={closeHireForm}
                   className="p-2 hover:bg-gray-700 rounded-lg transition-colors spark-click"

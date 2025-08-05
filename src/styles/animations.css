@@ -633,3 +633,21 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #11efef, #089cf1);
 }
+
+/* Blinking animation for contact elements */
+@keyframes contactBlink {
+  0%, 50% {
+    background-color: rgba(255, 255, 0, 0.2);
+    border-color: #fbbf24;
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+  }
+  51%, 100% {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: none;
+  }
+}
+
+.contact-blink {
+  animation: contactBlink 1s ease-in-out infinite;
+}
