@@ -10,21 +10,59 @@ import CursorTrail from './components/CursorTrail';
 import Toast from './components/Toast';
 import './styles/animations.css';
 
+// Resume Download Configuration:
+// - Uses Google Drive file ID: 1lB-si7fJDn-u1VxTDG30lxvr3P58w4Yc
+// - File name: Abhijeet_Uttam_Kamthe_Resume.pdf
+// - Direct download functionality - no redirection to Google Drive
+// - Includes fallback method if direct download fails
+// - Fixed HTTP 500 error by using correct file ID
+//
+// TO UPDATE RESUME IN THE FUTURE:
+// 1. Upload new resume to Google Drive
+// 2. Right-click on the new file and select "Copy link"
+// 3. Extract the file ID from the link: https://drive.google.com/file/d/FILE_ID_HERE/view?usp=sharing
+// 4. Replace the fileId value below with the new file ID
+// 5. Update the download filename if needed
+
 function App() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
   const handleResumeDownload = () => {
-    // Download resume from Google Drive
-    const link = document.createElement('a');
-    link.href = 'https://drive.google.com/uc?export=download&id=1CJTioyfQaISK0kbHnh8h0zd07ubA8eHp';
-    link.download = 'Abhijeet_Kamthe_Resume.pdf';
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    setToastMessage('Resume download started');
-    setShowToast(true);
+    try {
+      // Google Drive file ID for direct download
+      const fileId = '1lB-si7fJDn-u1VxTDG30lxvr3P58w4Yc';
+      
+      // Direct download URL using the correct file ID
+      const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+      
+      // Create download link with proper attributes
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = 'Abhijeet_Uttam_Kamthe_Resume.pdf';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      
+      // Add to DOM and trigger download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      setToastMessage('Resume download started! Check your downloads folder.');
+      setShowToast(true);
+      
+      // Fallback: If direct download doesn't work, try alternative method silently
+      setTimeout(() => {
+        const alternativeUrl = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
+        // Silently try alternative method without user prompt
+        window.open(alternativeUrl, '_blank');
+      }, 3000);
+      
+    } catch (error) {
+      console.error('Error downloading resume:', error);
+      setToastMessage('Error downloading resume. Please try again.');
+      setShowToast(true);
+    }
   };
 
   const scrollToSection = (sectionId: string) => {

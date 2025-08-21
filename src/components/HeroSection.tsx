@@ -31,8 +31,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onResumeClick, onContactClick
 
   const subtitles = [
     'DevOps Engineer',
-    'Cloud Architect',
-    'Automation Expert'
+    'Kubernetes Orchestrator',
+    'CI/CD Specialist'
   ];
 
   useEffect(() => {
